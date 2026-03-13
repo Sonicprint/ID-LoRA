@@ -36,7 +36,7 @@ All videos contain **both speech and environment sounds** generated jointly by I
 </tr>
 <tr>
   <td align="center">
-    <a href="assets/1158/reference.mp3">🔊 Listen</a>
+    <a href="https://github.com/ID-LoRA/id-lora.github.io/raw/main/videos/gallery/1158/reference.mp3">🔊 Listen</a>
   </td>
   <td align="center">
     <video src="https://github.com/ID-LoRA/id-lora.github.io/raw/main/videos/gallery/1158/jackhammer.mp4" width="320"></video>
@@ -44,7 +44,7 @@ All videos contain **both speech and environment sounds** generated jointly by I
 </tr>
 <tr>
   <td align="center">
-    <a href="assets/5335/reference.mp3">🔊 Listen</a>
+    <a href="https://github.com/ID-LoRA/id-lora.github.io/raw/main/videos/gallery/5335/reference.mp3">🔊 Listen</a>
   </td>
   <td align="center">
     <video src="https://github.com/ID-LoRA/id-lora.github.io/raw/main/videos/gallery/5335/guitar.mp4" width="320"></video>
