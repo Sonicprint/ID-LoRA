@@ -50,7 +50,7 @@ Key features:
 ### Setup
 
 ```bash
-git clone https://github.com/YOUR_ORG/ID-LoRA.git
+git clone https://github.com/ID-LoRA/ID-LoRA.git
 cd ID-LoRA
 
 # Install all dependencies (frozen lockfile for reproducibility)
