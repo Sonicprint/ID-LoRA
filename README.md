@@ -175,10 +175,8 @@ python scripts/inference_two_stage.py \
 
 The [`examples/`](examples/) directory contains pre-generated outputs you can inspect before running inference yourself:
 
-| | First Frame | Output |
-|---|---|---|
-| **Two-stage** | <img src="examples/first_frame.png" width="180"> | [`examples/two_stage/output_0000.mp4`](examples/two_stage/output_0000.mp4) |
-| **One-stage** | <img src="examples/first_frame.png" width="180"> | [`examples/one_stage/output_0000.mp4`](examples/one_stage/output_0000.mp4) |
+- [`examples/two_stage/output_0000.mp4`](examples/two_stage/output_0000.mp4) — two-stage pipeline
+- [`examples/one_stage/output_0000.mp4`](examples/one_stage/output_0000.mp4) — one-stage pipeline
 
 Both were generated with `--quantize` enabled (int8), seed 42, and the prompt:
 
