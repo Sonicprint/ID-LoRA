@@ -1,4 +1,4 @@
-<h2 align="center">ID-LoRA: Identity-Driven Audio-Video Personalization with In-Context LoRA</h1>
+<h1 align="center">ID-LoRA: Identity-Driven Audio-Video Personalization with In-Context LoRA</h1>
 
 <p align="center">
   <a href="https://arxiv.org/abs/2603.10256"><img src="https://img.shields.io/badge/arXiv-2603.10256-b31b1b.svg" alt="arXiv"></a>
@@ -78,13 +78,34 @@ uv sync --frozen
 
 ### 📥 Download Models
 
-ID-LoRA requires the base LTX-2 model and supporting components. Download everything with:
+ID-LoRA requires the base LTX-2 model and supporting components:
 
 ```bash
-bash scripts/download_models.sh
-```
+mkdir -p models
 
-This downloads to `models/` by default. To use a custom directory: `bash scripts/download_models.sh /path/to/models`.
+# Base model (required)
+huggingface-cli download Lightricks/LTX-2 \
+  ltx-2-19b-dev.safetensors --local-dir models
+
+# Text encoder (required)
+huggingface-cli download google/gemma-3-12b-it-qat-q4_0-unquantized \
+  --local-dir models/gemma-3-12b-it-qat-q4_0-unquantized
+
+# Spatial upscaler (for two-stage pipeline)
+huggingface-cli download Lightricks/LTX-2 \
+  ltx-2-spatial-upscaler-x2-1.0.safetensors --local-dir models
+
+# Distilled LoRA (for two-stage pipeline)
+huggingface-cli download Lightricks/LTX-2 \
+  ltx-2-19b-distilled-lora-384.safetensors --local-dir models
+
+# ID-LoRA checkpoint (pick one or both)
+huggingface-cli download AviadDahan/ID-LoRA-CelebVHQ \
+  lora_weights.safetensors --local-dir models/id-lora-celebvhq
+# or
+huggingface-cli download AviadDahan/ID-LoRA-TalkVid \
+  lora_weights.safetensors --local-dir models/id-lora-talkvid
+```
 
 ## 🚀 Inference
 
