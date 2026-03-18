@@ -95,6 +95,8 @@ DEFAULT_VIDEO_WIDTH = 512
 DEFAULT_NUM_FRAMES = 121
 DEFAULT_FRAME_RATE = 25.0
 RESOLUTION_DIVISOR = 32
+MAX_LONG_SIDE = 512
+MAX_PIXELS = 576 * 1024
 
 DEFAULT_INFERENCE_STEPS = 15
 DEFAULT_VIDEO_GUIDANCE_SCALE = 3.0
@@ -122,6 +124,18 @@ def get_video_dimensions(video_path: str | Path) -> tuple[int, int]:
 
 def snap_to_divisor(value: int, divisor: int = RESOLUTION_DIVISOR) -> int:
     return max(int(round(value / divisor)) * divisor, divisor)
+
+
+def compute_resolution_match_aspect(
+    src_h: int, src_w: int,
+    max_long: int = MAX_LONG_SIDE,
+    max_pixels: int = MAX_PIXELS,
+    divisor: int = RESOLUTION_DIVISOR,
+) -> tuple[int, int]:
+    scale = max_long / max(src_h, src_w)
+    pixel_scale = (max_pixels / (src_h * src_w)) ** 0.5
+    scale = min(scale, pixel_scale)
+    return snap_to_divisor(int(round(src_h * scale)), divisor), snap_to_divisor(int(round(src_w * scale)), divisor)
 
 
 # ---------------------------------------------------------------------------
@@ -724,6 +738,8 @@ def parse_args() -> argparse.Namespace:
                         help="Distilled LoRA strength for stage 2")
 
     parser.add_argument("--negative-prompt", default=DEFAULT_NEGATIVE_PROMPT)
+    parser.add_argument("--auto-resolution", action="store_true",
+                        help="Auto-detect resolution from first frame aspect ratio")
 
     return parser.parse_args()
 
@@ -736,6 +752,13 @@ def main() -> None:
     if not args.prompts_file and not (args.reference_audio and args.first_frame and args.prompt):
         print("Error: provide either --prompts-file or all of --reference-audio, --first-frame, --prompt")
         sys.exit(1)
+
+    if args.auto_resolution and args.first_frame:
+        from PIL import Image
+        _img = Image.open(args.first_frame)
+        _src_w, _src_h = _img.size
+        args.height, args.width = compute_resolution_match_aspect(_src_h, _src_w)
+        print(f"Auto-resolution: {_src_w}x{_src_h} -> {args.width}x{args.height} (stage 1)")
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
