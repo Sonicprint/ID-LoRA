@@ -6,6 +6,8 @@
   <a href="https://huggingface.co/AviadDahan"><img src="https://img.shields.io/badge/%F0%9F%A4%97-Models-yellow.svg" alt="HuggingFace Models"></a>
 </p>
 
+> **🆕 Latest Release: ID-LoRA 2.3** — We now support **LTX-2.3** (22B parameters), the latest LTX video model. ID-LoRA 2.3 brings **improved text conditioning**, **better audio quality**, and a new **Two-Stage HQ** inference mode for higher fidelity output. Pre-trained checkpoints for CelebV-HQ and TalkVid are available on [HuggingFace](https://huggingface.co/AviadDahan). See [ID-LoRA-2.3/README.md](ID-LoRA-2.3/README.md) for setup and usage.
+
 <p align="center">
   <img src="assets/teaser.png" alt="ID-LoRA teaser" width="720">
 </p>
@@ -21,7 +23,7 @@ Given a **text prompt, reference image, and short audio clip**, it generates a t
 - ⚡ **Zero-shot inference** — load LoRA weights, no per-speaker training
 - 🪶 **Lightweight** — trained on ~3K pairs on a single GPU
 
-Built on **LTX-2** (and now **LTX-2.3**) with **In-Context LoRA** for identity conditioning.
+**Recommended:** Use **ID-LoRA 2.3** (LTX-2.3, 22B) for best quality — improved text conditioning, better audio (BigVGAN v2), and Two-Stage HQ inference. Also supports LTX-2 (19B).
 
 
 ## 🔍 Overview
