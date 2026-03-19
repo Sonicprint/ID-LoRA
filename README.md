@@ -4,6 +4,8 @@
   <a href="https://arxiv.org/abs/2603.10256"><img src="https://img.shields.io/badge/arXiv-2603.10256-b31b1b.svg" alt="arXiv"></a>
   <a href="https://id-lora.github.io"><img src="https://img.shields.io/badge/Project-Page-blue.svg" alt="Project Page"></a>
   <a href="https://huggingface.co/AviadDahan"><img src="https://img.shields.io/badge/%F0%9F%A4%97-Models-yellow.svg" alt="HuggingFace Models"></a>
+  <a href="https://huggingface.co/datasets/noakraicer/ID-LoRA-CelebVHQ"><img src="https://img.shields.io/badge/%F0%9F%A4%97-CelebVHQ_Dataset-orange.svg" alt="CelebV-HQ Dataset"></a>
+  <a href="https://huggingface.co/datasets/noakraicer/ID-LoRA-TalkVid"><img src="https://img.shields.io/badge/%F0%9F%A4%97-TalkVid_Dataset-orange.svg" alt="TalkVid Dataset"></a>
 </p>
 
 > **🆕 Latest Release: ID-LoRA 2.3** — We now support **LTX-2.3** (22B parameters), the latest LTX video model. ID-LoRA 2.3 brings **improved text conditioning**, **better audio quality**, and a new **Two-Stage HQ** inference mode for higher fidelity output. Pre-trained checkpoints for CelebV-HQ and TalkVid are available on [HuggingFace](https://huggingface.co/AviadDahan). See [ID-LoRA-2.3/README.md](ID-LoRA-2.3/README.md) for setup and usage.
@@ -48,7 +50,7 @@ Key features:
 - [x] Training code
 - [x] LTX-2.3 support (22B model, two-stage HQ inference, BigVGAN v2 vocoder)
 - [ ] ComfyUI support
-- [ ] Training datasets (CelebV-HQ preprocessed, TalkVid preprocessed) -- HuggingFace Datasets
+- [x] Training datasets (CelebV-HQ preprocessed, TalkVid preprocessed) -- HuggingFace Datasets
 - [ ] Evaluation datasets and benchmark splits (CelebV-HQ v3.2 eval, TalkVid eval) -- HuggingFace Datasets
 - [ ] Evaluation scripts
 
@@ -212,14 +214,39 @@ Full generation configs are in [`examples/two_stage/args.json`](examples/two_sta
 
 ### 📂 Dataset Preparation
 
-ID-LoRA training requires preprocessed video-audio pairs with:
-- Video latents (encoded with LTX-2 VAE)
-- Audio latents (encoded with audio VAE)
-- Reference audio latents (from a different segment of the same speaker)
-- First-frame images
-- Text captions (visual description + speech transcription + sound description)
+ID-LoRA training requires four types of precomputed data per video:
+- **Video latents** — encoded with LTX-2 VAE
+- **Audio latents** — target audio encoded with the audio VAE
+- **Reference audio latents** — denoised audio from a different clip of the same speaker
+- **Text/caption embeddings** — precomputed with the text encoder (Gemma 3)
 
-See `packages/ltx-trainer/` for the preprocessing pipeline.
+We release the preprocessed training datasets on HuggingFace:
+
+| Dataset | Pairs | Unique Videos | Unique Speakers | Resolution | Link |
+|---------|-------|---------------|-----------------|------------|------|
+| ID-LoRA-CelebVHQ | 2,963 | 1,959 | 872 | 512×512 | [🤗 HuggingFace](https://huggingface.co/datasets/noakraicer/ID-LoRA-CelebVHQ) |
+| ID-LoRA-TalkVid | 11,470 | 5,803 | 1,973 | Original (1080p/4K); latents at 512×512 | [🤗 HuggingFace](https://huggingface.co/datasets/noakraicer/ID-LoRA-TalkVid) |
+
+Each dataset includes:
+- **Videos** with pair metadata (`train/metadata.jsonl` + video files)
+- **Precomputed latents** as `.tar.zst` archives: `latents` (video), `audio_latents` (target audio), `audio_latents_clean` (denoised reference audio), `conditions` (text embeddings)
+
+To download the precomputed latents for training:
+
+```python
+from huggingface_hub import snapshot_download
+
+snapshot_download(
+    "noakraicer/ID-LoRA-CelebVHQ",
+    repo_type="dataset",
+    allow_patterns=["precomputed/*", "train/metadata.jsonl"],
+    local_dir="./data/celebvhq",
+)
+```
+
+After extracting the archives, rename `audio_latents_clean` to `reference_audio_latents` to match the expected directory name in the training configs, and point `preprocessed_data_root` to the extracted directory.
+
+See the dataset cards on HuggingFace for full details on contents and loading instructions. For details on how the latents were computed, see `packages/ltx-trainer/`.
 
 ### 🏃 Run Training
 
