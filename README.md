@@ -412,6 +412,31 @@ A MOS study evaluating physically grounded audio-visual correspondence across 10
   <img src="assets/mos_study.png" alt="Environment sound MOS study" width="700">
 </p>
 
+## ⚠️ Ethical Considerations & Responsible Use
+
+ID-LoRA is a research project intended to advance audio-video generation.
+Technology that synthesizes a person's likeness and voice carries inherent
+risks of misuse, including but not limited to:
+
+- **Non-consensual impersonation** — generating media of real individuals
+  without their knowledge or consent
+- **Fraud and social engineering** — using cloned voices or likenesses to
+  deceive others
+- **Misinformation** — creating fabricated statements attributed to real people
+
+**We ask that users of this work:**
+
+1. Obtain explicit consent before generating media of any identifiable person.
+2. Clearly label all generated content as synthetic / AI-generated.
+3. Refrain from using this technology to deceive, harass, defame, or defraud.
+4. Comply with all applicable laws and institutional policies regarding
+   synthetic media.
+
+This project is released for **research purposes only**. The authors do not
+condone and bear no responsibility for malicious applications of this work.
+We encourage the community to develop and adopt detection tools, watermarking
+standards, and governance frameworks alongside generative capabilities.
+
 ## 📝 Citation
 
 ```bibtex
