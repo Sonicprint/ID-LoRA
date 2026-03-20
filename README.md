@@ -31,7 +31,7 @@ Given a **text prompt, reference image, and short audio clip**, it generates a t
 - ⚡ **Zero-shot inference** — load LoRA weights, no per-speaker training
 - 🪶 **Lightweight** — trained on ~3K pairs on a single GPU
 
-**Recommended:** Use **ID-LoRA 2.3** (LTX-2.3, 22B) for best quality — improved text conditioning, better audio (BigVGAN v2), and Two-Stage HQ inference. Also supports LTX-2 (19B).
+**Recommended:** Use **ID-LoRA 2.3** (LTX-2.3, 22B) for best quality — improved text conditioning, better audio, and Two-Stage HQ inference. Also supports LTX-2 (19B).
 
 
 ## 🔍 Overview
@@ -54,7 +54,7 @@ Key features:
 - [x] Pre-trained checkpoints (CelebV-HQ, TalkVid)
 - [x] Inference scripts (one-stage, two-stage)
 - [x] Training code
-- [x] LTX-2.3 support (22B model, two-stage HQ inference, BigVGAN v2 vocoder)
+- [x] LTX-2.3 support (22B model, two-stage HQ inference)
 - [ ] ComfyUI support
 - [x] Training datasets (CelebV-HQ preprocessed, TalkVid preprocessed) -- HuggingFace Datasets
 - [ ] Evaluation datasets and benchmark splits (CelebV-HQ v3.2 eval, TalkVid eval) -- HuggingFace Datasets
